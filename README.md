@@ -25,13 +25,13 @@ and then deploys and uploads it as a website on another NS.
 - terraform init<br>
     export AWS_ACCESS_KEY_ID=<...><br>
     export AWS_SECRET_ACCESS_KEY=<...><br>
-- correct some settings at terraform.tf (saving state) add :
+- correct some settings at terraform.tf (saving state) add :<br>
     backend "s3" {<br>
      bucket = "tfs-<...>" <br>
      key = "devops-terraform-eks"<br>
      region = "eu-central-1"<br>
     }<br>
-- correct variables.tf for my variable:
+- correct variables.tf for my variable:<br>
   variable "region" {<br>
    description = "AWS region"<br>
    type        = string<br>
