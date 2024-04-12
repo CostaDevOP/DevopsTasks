@@ -21,46 +21,46 @@ and then deploys and uploads it as a website on another NS.
 2. create Group name - Admin (AdministratorAccess)
 3. add S3 (bucket) - saving state
 4. create folder terraform:
-- $ git clone https://github.com/hashicorp/learn-terraform-provision-eks-cluster
-- terraform init
--   export AWS_ACCESS_KEY_ID=<...>
-    export AWS_SECRET_ACCESS_KEY=<...>
+- $ git clone https://github.com/hashicorp/learn-terraform-provision-eks-cluster<br>
+- terraform init<br>
+-   export AWS_ACCESS_KEY_ID=<...><br>
+    export AWS_SECRET_ACCESS_KEY=<...><br>
 - correct some settings at terraform.tf (saving state) add :
-      backend "s3" {
-    bucket = "tfs-<...>" 
-    key = "devops-terraform-eks"
-    region = "eu-central-1"
-    }
+      backend "s3" {<br>
+    bucket = "tfs-<...>" <br>
+    key = "devops-terraform-eks"<br>
+    region = "eu-central-1"<br>
+    }<br>
 - correct variables.tf for my variable:
-    variable "region" {
-  description = "AWS region"
-  type        = string
-  default     = "eu-central-1
-  }
-- connect to my eks :
-   $ aws eks update-kubeconfig --region <...> --name <...>
-- get all nodes :
-   $ kubectl get nodes
+    variable "region" {<br>
+  description = "AWS region"<br>
+  type        = string<br>
+  default     = "eu-central-1<br>
+  }<br>
+- connect to my eks :<br>
+   $ aws eks update-kubeconfig --region <...> --name <...><br>
+- get all nodes :<br>
+   $ kubectl get nodes<br>
 
   ## Setting up Jenkins
 
   1. using documentation: https://www.jenkins.io/doc/book/installing/kubernetes/
-  2. create jenkins folder and : $ git clone https://github.com/scriptcamp/kubernetes-jenkins
-      $ kubectl create namespace devops
-  - correct all file to my projec (NS , Node name .... )
-  - commands i use :
-     $ kubectl apply -f serviceAccount.yaml
-     $ kubectl create -f volume.yaml
-     $ kubectl apply -f deployment.yaml
-  - check deploy status:
-     $ kubectl get deployments -n devops
-  - deploy detail:
-     $ kubectl describe deployments --namespace=devops
-  - create jenkins service:
-     $ kubectl apply -f service.yaml
+  2. create jenkins folder and : $ git clone https://github.com/scriptcamp/kubernetes-jenkins<br>
+      $ kubectl create namespace devops<br>
+  - correct all file to my projec (NS , Node name .... )<br>
+  - commands i use :<br>
+     $ kubectl apply -f serviceAccount.yaml<br>
+     $ kubectl create -f volume.yaml<br>
+     $ kubectl apply -f deployment.yaml<br>
+  - check deploy status:<br>
+     $ kubectl get deployments -n devops<br>
+  - deploy detail:<br>
+     $ kubectl describe deployments --namespace=devops<br>
+  - create jenkins service:<br>
+     $ kubectl apply -f service.yaml<br>
 
-  - first connect pass command: (kubectl get pods --namespace=devops)
-     $ kubectl exec -it <...> cat /var/jenkins_home/secrets/initialAdminPassword -n devops
+  - first connect pass command: (kubectl get pods --namespace=devops)<br>
+     $ kubectl exec -it <...> cat /var/jenkins_home/secrets/initialAdminPassword -n devops<br>
 
   
     
