@@ -45,7 +45,8 @@ and then deploys and uploads it as a website on another NS.
   ## Setting up Jenkins
 
   1. using documentation: https://www.jenkins.io/doc/book/installing/kubernetes/
-  2. create jenkins folder and : $ git clone https://github.com/scriptcamp/kubernetes-jenkins<br>
+  2. create jenkins folder and :<br>
+      $ git clone https://github.com/scriptcamp/kubernetes-jenkins<br>
       $ kubectl create namespace devops<br>
   - correct all file to my projec (NS , Node name .... )<br>
   - commands i use :<br>
