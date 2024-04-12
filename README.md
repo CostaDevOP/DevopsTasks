@@ -23,19 +23,19 @@ and then deploys and uploads it as a website on another NS.
 4. create folder terraform:
 - $ git clone https://github.com/hashicorp/learn-terraform-provision-eks-cluster<br>
 - terraform init<br>
--   export AWS_ACCESS_KEY_ID=<...><br>
+    export AWS_ACCESS_KEY_ID=<...><br>
     export AWS_SECRET_ACCESS_KEY=<...><br>
 - correct some settings at terraform.tf (saving state) add :
-      backend "s3" {<br>
-    bucket = "tfs-<...>" <br>
-    key = "devops-terraform-eks"<br>
-    region = "eu-central-1"<br>
+    backend "s3" {<br>
+     bucket = "tfs-<...>" <br>
+     key = "devops-terraform-eks"<br>
+     region = "eu-central-1"<br>
     }<br>
 - correct variables.tf for my variable:
-    variable "region" {<br>
-  description = "AWS region"<br>
-  type        = string<br>
-  default     = "eu-central-1<br>
+  variable "region" {<br>
+   description = "AWS region"<br>
+   type        = string<br>
+   default     = "eu-central-1<br>
   }<br>
 - connect to my eks :<br>
    $ aws eks update-kubeconfig --region <...> --name <...><br>
