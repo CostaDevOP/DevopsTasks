@@ -38,6 +38,29 @@ and then deploys and uploads it as a website on another NS.
   default     = "eu-central-1
   }
 - connect to my eks :
-  $ aws eks update-kubeconfig --region <> --name <>
+   $ aws eks update-kubeconfig --region <> --name <>
 - see all nodes :
-  $ kubectl get nodes
+   $ kubectl get nodes
+
+  ## Setting up Jenkins
+
+  1. using documentation: https://www.jenkins.io/doc/book/installing/kubernetes/
+  2. create jenkins folder and : $ git clone https://github.com/scriptcamp/kubernetes-jenkins
+      $ kubectl create namespace devops
+  - correct all file to my projec (NS , Node name .... )
+  - commands i use :
+     $ kubectl apply -f serviceAccount.yaml
+     $ kubectl create -f volume.yaml
+     $ kubectl apply -f deployment.yaml
+  - check deploy status:
+     $ kubectl get deployments -n devops
+  - deploy detail:
+     $ kubectl describe deployments --namespace=devops
+  - create jenkins service:
+     $ kubectl apply -f service.yaml
+
+  - first connect pass command:
+     $ kubectl exec -it jenkins-559d8cd85c-cfcgk cat /var/jenkins_home/secrets/initialAdminPassword -n devops-tools
+  
+    
+    
