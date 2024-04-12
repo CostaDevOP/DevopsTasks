@@ -21,7 +21,7 @@ and then deploys and uploads it as a website on another NS.
 2. create Group name - Admin (AdministratorAccess)
 3. add S3 (bucket) - saving state
 4. create folder terraform:
-- git clone https://github.com/hashicorp/learn-terraform-provision-eks-cluster
+- $ git clone https://github.com/hashicorp/learn-terraform-provision-eks-cluster
 - terraform init
 -   export AWS_ACCESS_KEY_ID=<>
     export AWS_SECRET_ACCESS_KEY=<>
@@ -35,6 +35,9 @@ and then deploys and uploads it as a website on another NS.
     variable "region" {
   description = "AWS region"
   type        = string
-  default     = "eu-central-1"
-}
-
+  default     = "eu-central-1
+  }
+- connect to my eks :
+  $ aws eks update-kubeconfig --region <> --name <>
+- see all nodes :
+  $ kubectl get nodes
