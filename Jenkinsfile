@@ -25,11 +25,23 @@ pipeline {
                 }
             }
         }    
-        stage('Docker Initialization') {
+        stage('Install and Initialize Docker') {
             steps {
-                // Initialize Docker
+                // Check if Docker is installed
+                script {
+                    def dockerInstalled = sh(script: 'docker --version', returnStatus: true) == 0
+                    if (!dockerInstalled) {
+                        // Install Docker
+                        sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
+                        sh 'sudo sh get-docker.sh'
+                        // Add Jenkins user to Docker group to avoid sudo requirement
+                        sh 'sudo usermod -aG docker jenkins'
+                        // Start Docker service
+                        sh 'sudo systemctl start docker'
+                    }
+                }
+                // Initialize Docker if needed
                 sh 'docker --version'
-                sh 'docker init'
                 // Add any other Docker initialization steps here
             }
         }
