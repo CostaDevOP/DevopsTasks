@@ -1,56 +1,23 @@
 pipeline {
-    agent {
-        kubernetes {
-            // Define the Pod template
-            yaml """
-            apiVersion: v1
-            kind: Pod
-            metadata:
-              labels:
-                app: kubepods
-            spec:
-              containers:
-              - name: dotnet
-                image: mcr.microsoft.com/dotnet/core/sdk:3.1
-                command: ['sleep', 'infinity']
-            """
-        }
-    }
+    agent any
+
     stages {
-        stage('Pull Source Code') {
+        stage('Clone Repository') {
             steps {
-                // Clone the repository from GitHub
-                git branch: 'main', credentialsId: 'jenkins-exmp-github', url: 'https://github.com/CostaDevOP/DevopsTasks.git'
+                git 'https://github.com/CostaDevOP/DevopsTasks.git'
             }
         }
-        stage('Build') {
+
+        stage('Build .NET App') {
             steps {
-                container('dotnet') {
-                    // Run dotnet build command
-                    sh 'dotnet build'
-                }
+                // You may need to adjust these commands based on your project structure
+                sh 'cd docker-dotnet-sample && dotnet restore && dotnet build'
             }
         }
-        stage('Test') {
+
+        stage('Deploy with Docker Compose') {
             steps {
-                container('dotnet') {
-                    // Run dotnet test command
-                    sh 'dotnet test'
-                }
-            }
-        }
-        stage('Deploy') {
-            steps {
-                container('dotnet') {
-                    // Run dotnet publish command
-                    sh 'dotnet publish -c Release -o ./publish'
-                }
-                // Deploy the published application to Kubernetes
-                kubernetesDeploy (
-                    configs: 'deployment.yaml',
-                    kubeconfigId: 'kubeconfig',
-                    enableConfigSubstitution: true
-                )
+                sh 'cd docker-dotnet-sample && docker-compose up -d'
             }
         }
     }
