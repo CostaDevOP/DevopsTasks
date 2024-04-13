@@ -15,7 +15,7 @@ and then deploys and uploads it as a website on another NS.
 - [jenkins]
 - [Github]
 - as .Net app i will use:<br>
-  [hello-dotnet] - https://github.com/dotnet/dotnet-docker/blob/main/samples/kubernetes/hello-dotnet <br>
+  [hello-dotnet] - https://github.com/docker/docker-dotnet-sample <br>
 
 ## steps
  
