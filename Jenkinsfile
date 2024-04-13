@@ -24,6 +24,14 @@ pipeline {
                     // Add more commands as needed
                 }
             }
+        }    
+        stage('Docker Initialization') {
+            steps {
+                // Initialize Docker
+                sh 'docker --version'
+                sh 'docker init'
+                // Add any other Docker initialization steps here
+            }
         }
     }
 }
