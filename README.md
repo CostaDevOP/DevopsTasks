@@ -14,7 +14,7 @@ and then deploys and uploads it as a website on another NS.
 - [terraform]
 - [jenkins]
 - [Github]
-- as dotNet app i will use:<br>
+- as .Net app i will use:<br>
   [hello-dotnet] - https://github.com/dotnet/dotnet-docker/blob/main/samples/kubernetes/hello-dotnet <br>
 
 ## steps
