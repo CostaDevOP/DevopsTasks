@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Fetch code from GitHub
-                git 'https://github.com/CostaDevOP/DevopsTasks.git'
+                git branch: 'main', git 'https://github.com/CostaDevOP/DevopsTasks.git'
             }
         }
     }
