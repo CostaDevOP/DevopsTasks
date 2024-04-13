@@ -4,7 +4,6 @@ pipeline {
     environment {
         DOTNET_ROOT = '/var/jenkins_home/.dotnet'
         PATH = "$DOTNET_ROOT:$PATH"
-        DOTNET_CLI_TELEMETRY_OPTOUT = '1'
     }
 
     stages {
