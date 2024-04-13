@@ -1,6 +1,6 @@
 # DevOps Tasks
-## K8S > Jenkins > .netCore
- 
+## GitHub > Jenkins > k8s > .netCore
+
 Below are the mission details:
 1. Please create a creation process and use it to set up a Jenkins service as a Pod in k8s, in NS called devops and connect it to GIT.
  - There is no meaning to the type of k8s or of GIT.
