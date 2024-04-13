@@ -25,24 +25,12 @@ pipeline {
                 }
             }
         }    
-        stage('Install and Initialize Docker') {
+        stage('Build Docker Image') {
             steps {
-                // Check if Docker is installed
                 script {
-                    def dockerInstalled = sh(script: 'docker --version', returnStatus: true) == 0
-                    if (!dockerInstalled) {
-                        // Install Docker
-                        sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
-                        sh 'sudo sh get-docker.sh'
-                        // Add Jenkins user to Docker group to avoid sudo requirement
-                        sh 'sudo usermod -aG docker jenkins'
-                        // Start Docker service
-                        sh 'sudo systemctl start docker'
-                    }
+                    // Build Docker image using a Dockerfile
+                    def customImage = docker.build('costadevop/docker-dotnet-sample')
                 }
-                // Initialize Docker if needed
-                sh 'docker --version'
-                // Add any other Docker initialization steps here
             }
         }
     }
