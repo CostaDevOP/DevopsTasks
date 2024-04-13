@@ -13,6 +13,8 @@ pipeline {
               - name: dotnet
                 image: mcr.microsoft.com/dotnet/core/sdk:3.1
                 command: ['sleep', 'infinity']
+                ports:
+                    - containerPort: 5000
             """
             // Define namespace
             defaultContainer 'jnlp'
