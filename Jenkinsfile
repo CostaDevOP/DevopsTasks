@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     // Build Docker image using the provided Dockerfile
-                    docker.build('mywebapp', '-f Dockerfile .')
+                    docker.build('mywebapp')
                     // Push the built image to a container registry if needed
                     docker.withRegistry('https://yourregistry.com', 'credentialsId') {
                         docker.image('mywebapp').push('latest')
