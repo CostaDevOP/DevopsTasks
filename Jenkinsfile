@@ -4,13 +4,12 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/CostaDevOP/DevopsTasks.git'
+                git credentialsId: 'jenkins-exmp-github', url: 'https://github.com/CostaDevOP/DevopsTasks.git', branch: 'main'
             }
         }
 
         stage('Build .NET App') {
             steps {
-                // You may need to adjust these commands based on your project structure
                 sh 'cd docker-dotnet-sample && dotnet restore && dotnet build'
             }
         }
