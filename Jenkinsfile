@@ -1,12 +1,11 @@
 pipeline {
-    agent any
-    
+    agent any    
     stages {
 	stage('Clear Workspace') {
-		steps {
+	    steps {
                 // Clear the workspace before proceeding
-			deleteDir()
-            	}
+		deleteDir()
+            }
         }
         stage('Checkout') {
             steps {
