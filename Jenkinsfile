@@ -28,8 +28,10 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
+                    // Specify the full path to the Docker executable
+                    def dockerExecutable = '/usr/bin/docker'
                     // Build Docker image using a Dockerfile
-                    def customImage = docker.build('costadevop/docker-dotnet-sample')
+                    sh "${dockerExecutable} build -t costadevop/docker-dotnet-sample ."
                 }
             }
         }
