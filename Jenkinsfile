@@ -23,7 +23,7 @@ pipeline {
         stage('Pull Source Code') {
             steps {
                 // Clone the repository from GitHub
-                git branch: 'main', credentialsId: 'your-credentials-id', url: 'https://github.com/CostaDevOP/DevopsTasks.git'
+                git branch: 'main', credentialsId: 'jenkins-exmp-github', url: 'https://github.com/CostaDevOP/DevopsTasks.git'
             }
         }
         stage('Build') {
