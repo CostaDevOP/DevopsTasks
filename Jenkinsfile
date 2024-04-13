@@ -16,9 +16,6 @@ pipeline {
                 ports:
                     - containerPort: 5000
             """
-            // Define namespace
-            defaultContainer 'jnlp'
-            namespace 'devops'
         }
     }
     stages {
