@@ -64,7 +64,8 @@ and then deploys and uploads it as a website on another NS.
 
   - first connect pass command: (kubectl get pods --namespace=devops)<br>
      $ kubectl exec -it <...> cat /var/jenkins_home/secrets/initialAdminPassword -n devops<br>
-  - $ kubectl port-forward <...> 32000:32000 -n devops <br>
+  -  $ kubectl port-forward <...> 32000:32000 -n devops <br>
+  -  $ 403 - [kubectl create clusterrolebinding cluster-system-anonymous --clusterrole=cluster-admin --user=system:anonymous]
 
   
     
