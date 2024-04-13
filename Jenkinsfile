@@ -18,9 +18,9 @@ pipeline {
             }
         }
 
-        stage('Verify PATH Configuration') {
+        stage('Verify .NET Installation') {
             steps {
-                sh 'echo $PATH'
+                sh 'dotnet --info'
             }
         }
 
