@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    environment {
+        DOTNET_ROOT = '/var/jenkins_home/.dotnet'
+        PATH = "$DOTNET_ROOT:$PATH"
+        DOTNET_CLI_TELEMETRY_OPTOUT = '1'
+    }
+
     stages {
         stage('Install .NET SDK') {
             steps {
@@ -8,8 +14,13 @@ pipeline {
                     sh 'curl -o dotnet-install.sh https://dot.net/v1/dotnet-install.sh'
                     sh 'chmod +x dotnet-install.sh'
                     sh './dotnet-install.sh -c Current --verbose'
-                    sh 'export PATH="$HOME/.dotnet:$PATH"'
                 }
+            }
+        }
+
+        stage('Verify PATH Configuration') {
+            steps {
+                sh 'echo $PATH'
             }
         }
 
