@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demowebapi-depl
+  namespace: devops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demowebapi
+  template:
+    metadata:
+      labels:
+        app: demowebapi
+    spec:
+      containers:
+        - name: webapi-demo
+          image: costadevop/dotnet-demo:1
+          ports:
+          - containerPort: 80
