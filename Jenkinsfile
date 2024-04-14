@@ -1,38 +1,44 @@
-podTemplate(label: 'mypod', containers: [
-    containerTemplate(name: 'jnlp', image: 'jenkins/jnlp-slave:latest', args: ['\$(JENKINS_SECRET)', '\$(JENKINS_NAME)'], privileged: true),
-    containerTemplate(name: 'tools', image: 'your-image-with-sudo:latest', command: 'cat', ttyEnabled: true)
-  ],
-  volumes: [
-    hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
-  ]) {
-  node('mypod') {
-    environment {
-        GIT_CREDENTIALS = 'jenkins-exmp-github'
-        GIT_BRANCH = 'main' 
+pipeline {
+    agent any    
+    agent {
+        kubernetes {
+            // Define the Pod template
+            yaml """
+            apiVersion: v1
+            kind: Pod
+            metadata:
+              labels:
+                app: kubepods
+            spec:
+              containers:
+              - name: dotnet
+                image: mcr.microsoft.com/dotnet/core/sdk:3.1
+                command: ['sleep', 'infinity']
+            """
+            // Define namespace
+            defaultContainer 'jnlp'
+            namespace 'devops'
+        }
     }
-
     stages {
+        stage('Clear Workspace') {
+        stage('Pull Source Code') {
+            steps {
+                // Clear the workspace before proceeding
+                deleteDir()
+                // Clone the repository from GitHub
+                git branch: 'main', credentialsId: 'your-credentials-id', url: 'https://github.com/CostaDevOP/DevopsTasks.git'
+            }
+        }
         stage('Checkout') {
+        stage('Build') {
             steps {
-                git branch: "${env.GIT_BRANCH}", credentialsId: "${env.GIT_CREDENTIALS}", url: 'https://github.com/CostaDevOP/DevopsTasks.git'
+                // Fetch code from GitHub
+                git branch: 'main', url: 'https://github.com/CostaDevOP/DevopsTasks.git'
+                container('dotnet') {
+                    // Run dotnet build command
+                    sh 'dotnet build'
+                }
             }
-        }
-        stage('Install Docker') {
-            steps {
-                sh 'sudo apt update'
-                sh 'sudo apt upgrade'
-                sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
-                sh 'sh get-docker.sh'
-                sh 'sudo usermod -aG docker $USER'
-                sh 'newgrp docker'
-                sh 'docker --version'
-            }
-        }
-        stage('Build and Run') {
-            steps {
-                sh 'docker --version'
-            }
-        }
+        }  
     }
-  }
-}
