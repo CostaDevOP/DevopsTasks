@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('chekout') {
             steps {
-                git url:'https://github.com/CostaDevOP/DevopsTasks.git' , branch: 'main' , credentialsId 'jenkins-exmp-github'
+                git url:'https://github.com/CostaDevOP/DevopsTasks.git' , branch: 'main' 
                 sh 'ls -la'
             }
         }
