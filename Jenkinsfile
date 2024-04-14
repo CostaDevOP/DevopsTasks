@@ -10,7 +10,7 @@ spec:
     tty: true
 """
 ) {
-    node(POD_LABEL) {
+    node("slave") {
       container('jnlp') {
         sh "hostname"
       }
