@@ -1,18 +1,8 @@
-podTemplate(yaml: """
-apiVersion: v1
-kind: Pod
-spec:
-  containers:
-  - name: jnlp
-    image: jenkins/jnlp-slave:latest
-    command:
-    - cat
-    tty: true
-"""
-) {
-    node("POD_LABEL") {
-      container('jnlp') {
-        sh "hostname"
-      }
+pipline {
+    stages {
+        stage ("chekout"){
+            git url:'https://github.com/CostaDevOP/DevopsTasks.git' , branch: 'main' , credentialsId 'jenkins-exmp-github'
+            sh 'ls -la'
+        }
     }
 }
