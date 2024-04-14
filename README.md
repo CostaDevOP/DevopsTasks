@@ -25,8 +25,9 @@ and then deploys and uploads it as a website on another NS.
 4. create folder terraform:
 - $ git clone https://github.com/hashicorp/learn-terraform-provision-eks-cluster<br>
 - terraform init<br>
-    export AWS_ACCESS_KEY_ID=<...><br>
-    export AWS_SECRET_ACCESS_KEY=<...><br>
+    $ export AWS_ACCESS_KEY_ID=<...><br>
+    $ export AWS_SECRET_ACCESS_KEY=<...><br>
+    $ terraform init
 - correct some settings at terraform.tf (saving state) add :<br>
     backend "s3" {<br>
      bucket = "tfs-<...>" <br>
