@@ -14,31 +14,7 @@ pipeline {
         }
         stage('Build and Run') {
             steps {
-                script {
-                    dockerComposeBuild()
-                    dockerComposeUp()
-                }
+                sh 'docker --version'
             }
         }
     }
-
-    post {
-        always {
-            script {
-                dockerComposeDown()
-            }
-        }
-    }
-}
-
-def dockerComposeBuild() {
-    sh 'docker-compose build'
-}
-
-def dockerComposeUp() {
-    sh 'docker-compose up -d'
-}
-
-def dockerComposeDown() {
-    sh 'docker-compose down'
-}
