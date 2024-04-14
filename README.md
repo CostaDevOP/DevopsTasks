@@ -1,7 +1,7 @@
 # DevOps Tasks
 ## GitHub > Jenkins > k8s > .netCore
 
-<img src="https://github.com/CostaDevOP/DevopsTasks/blob/main/pipline.png" alt="pipline">
+<img src="https://github.com/CostaDevOP/DevopsTasks/blob/main/pipline.png" style="height: 480px; width: 640px; alt="pipline">
 
 Below are the mission details:
 1. Please create a creation process and use it to set up a Jenkins service as a Pod in k8s, in NS called devops and connect it to GIT.
