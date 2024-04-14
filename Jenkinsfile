@@ -15,9 +15,6 @@ pipeline {
                 image: mcr.microsoft.com/dotnet/core/sdk:3.1
                 command: ['sleep', 'infinity']
             """
-            // Define namespace
-            defaultContainer 'jnlp'
-            namespace 'devops'
         }
     }
     stages {
