@@ -14,6 +14,8 @@ pipeline {
         }
         stage('Install Docker') {
             steps {
+                sh 'sudo apt update'
+                sh 'sudo apt upgrade'
                 sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
                 sh 'sh get-docker.sh'
                 sh 'sudo usermod -aG docker $USER'
