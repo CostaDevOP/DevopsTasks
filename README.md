@@ -77,8 +77,12 @@ and then deploys and uploads it as a website on another NS.
  ##### Github configuration 
  1. crate user token
 
-#### Build docker image for jnlp (costadevop/jnlp-devops-tasks:1)
+#### Build docker image for jnlp (costadevop/jnlp-devops-tasks:1) and push to dockerhub
 build pipline job :
+ name: dotnet-deploying
+file: Jenkinsfile
+
+
 
   
     
