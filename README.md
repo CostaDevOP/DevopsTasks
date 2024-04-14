@@ -67,6 +67,18 @@ and then deploys and uploads it as a website on another NS.
   -  $ kubectl port-forward <...> 32000:32000 -n devops <br>
   -  $ 403 - [kubectl create clusterrolebinding cluster-system-anonymous --clusterrole=cluster-admin --user=system:anonymous]
 
+ ##### Loggin to Jenkins and config 
+ 1. install k8s plugins<br>
+ 2. setting cloud:<br>
+    - setting Credentials (.kube/config file)<br>
+    - setting pod tamplate<br>
+ 3. setting Credentials for github (user token from github)
+ ##### Github configuration 
+ 1. crate user token
+
+#### Build docker image for jnlp (costadevop/jnlp-devops-tasks:1)
+build pipline job :
+
   
     
     
