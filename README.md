@@ -58,8 +58,7 @@ and then deploys and uploads it as a website on another NS.
      $ kubectl apply -f serviceAccount.yaml<br>\
     
     !!! befor create volume we need correct the yaml file: <br>
-  <------------------------------------------------------------> <br>
-
+******************************************** <br>
       nodeAffinity: <br>
     required: <br>
       nodeSelectorTerms: <br>
@@ -69,7 +68,7 @@ and then deploys and uploads it as a website on another NS.
           values: <br>
           - <...(kubectl get nodes)> <br>
 <br>
-  <------------------------------------------------------------> <br>
+******************************************** <br>
      $ kubectl create -f volume.yaml<br>
      $ kubectl apply -f deployment.yaml<br>
   - check deploy status:<br>
