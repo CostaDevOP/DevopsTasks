@@ -57,16 +57,16 @@ and then deploys and uploads it as a website on another NS.
   - commands i use :<br>
      $ kubectl apply -f serviceAccount.yaml<br>\
     !!! befor create volume we need correct the yaml file: <br>
-    ------------------------------------------------------------<br>
-      nodeAffinity:<br>
-    required:<br>
-      nodeSelectorTerms:<br>
-      - matchExpressions:<br>
-        - key: kubernetes.io/hostname<br>
-          operator: In<br>
-          values:<br>
-          - <...(kubectl get nodes)><br>
-    ------------------------------------------------------------<br>
+<------------------------------------------------------------> <br>
+      nodeAffinity: <br>
+    required: <br>
+      nodeSelectorTerms: <br>
+      - matchExpressions: <br>
+        - key: kubernetes.io/hostname <br>
+          operator: In <br>
+          values: <br>
+          - <...(kubectl get nodes)> <br>
+<------------------------------------------------------------> <br>
      $ kubectl create -f volume.yaml<br>
      $ kubectl apply -f deployment.yaml<br>
   - check deploy status:<br>
