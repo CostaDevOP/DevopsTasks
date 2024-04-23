@@ -55,8 +55,9 @@ and then deploys and uploads it as a website on another NS.
       $ kubectl create namespace devops<br>
   - correct all file to my projec (NS , Node name .... )<br>
   - commands i use :<br>
-     $ kubectl apply -f serviceAccount.yaml<br>\
-    
+     $ kubectl apply -f serviceAccount.yaml<br>
+     
+<br>
     !!! befor create volume we need correct the yaml file: <br>
 ******************************************** <br>
       nodeAffinity: <br>
