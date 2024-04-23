@@ -36,24 +36,24 @@ spec:
                 sh 'pwd'
             }
         }
-        stage('build') {
-            dir('dotNet-Demo') {
-                sh "docker build -t costadevop/dotnet-demo:$BUILD_NUMBER ."            
-            }
-        }
-        stage('apply') {
-            steps {
-                dir('dotnet-app-yaml') {
-                    withCredentials([file(credentialsId: 'mykubconfigfile', variable: 'MY_FILE')]) {
-                    //sh "cat $MY_FILE"
-                    sh 'mkdir ~/.kube/'        
-                    sh 'cat $MY_FILE > ~/.kube/config'
-                    //sh 'cat ~/.kube/config'
-                    sh 'kubectl apply -f deployment.yaml'
-                    sh 'kubectl apply -f service-lb-dotnet.yaml'
-                    }               
-                }
-            }
-        }
+        // stage('build') {
+        //     dir('dotNet-Demo') {
+        //         sh "docker build -t costadevop/dotnet-demo:$BUILD_NUMBER ."            
+        //     }
+        // }
+        // stage('apply') {
+        //     steps {
+        //         dir('dotnet-app-yaml') {
+        //             withCredentials([file(credentialsId: 'mykubconfigfile', variable: 'MY_FILE')]) {
+        //             //sh "cat $MY_FILE"
+        //             sh 'mkdir ~/.kube/'        
+        //             sh 'cat $MY_FILE > ~/.kube/config'
+        //             //sh 'cat ~/.kube/config'
+        //             sh 'kubectl apply -f deployment.yaml'
+        //             sh 'kubectl apply -f service-lb-dotnet.yaml'
+        //             }               
+        //         }
+        //     }
+        // }
     }
 }
