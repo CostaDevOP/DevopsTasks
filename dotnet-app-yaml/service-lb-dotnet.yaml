@@ -3,10 +3,6 @@ kind: Service
 metadata:
   name: dot-net-app
   namespace: devops
-  annotations:
-      prometheus.io/scrape: 'true'
-      prometheus.io/path:   /
-      prometheus.io/port:   '8080'
 spec:
   selector: 
     app: dot-net-app
@@ -16,5 +12,3 @@ spec:
       protocol: TCP
       port: 80
       targetPort: 8080
-      
-      
