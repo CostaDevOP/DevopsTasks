@@ -68,7 +68,7 @@ spec:
                     // //sh 'cat ~/.kube/config'
                     sh 'kubectl apply -f deployment.yaml'
                     sh 'kubectl apply -f service-lb-dotnet.yaml'
-                    }               
+                    // }               
                 }
             }
         }
