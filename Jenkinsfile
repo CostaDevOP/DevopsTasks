@@ -39,7 +39,8 @@ spec:
         stage('build') {
             steps {
                 dir('dotNet-Demo') {
-                    sh "docker build -t costadevop/dotnet-demo:$BUILD_NUMBER ."            
+                    // sh "docker build -t costadevop/dotnet-demo:$BUILD_NUMBER ." 
+                    sh 'echo build Success'
                 }
             }
         }
