@@ -17,4 +17,4 @@ spec:
         - name: webapi-demo
           image: costadevop/dotnet-demo:1
           ports:
-          - containerPort: 8080
+            - containerPort: 80
