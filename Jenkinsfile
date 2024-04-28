@@ -49,6 +49,15 @@ spec:
                 sh 'echo test'
             }
         }
+        stage('Push our image to dockerhub') { 
+            steps { 
+                script { 
+                    docker.withRegistry( '', registryCredential ) { 
+                        dockerImage.push() 
+                    }
+                } 
+            }
+        }
         stage('apply') {
             steps {
                 dir('dotnet-app-yaml') {
