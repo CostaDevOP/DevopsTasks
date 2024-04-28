@@ -16,7 +16,7 @@ kind: Pod
 spec:
   containers:
   - name: jnlp-devops
-    image: jenkins/jnlp-slave 
+    image: costadevop/jnlp-devops-tasks:1
     command:
     - sleep
     args:
