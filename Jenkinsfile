@@ -37,8 +37,10 @@ spec:
             }
         }
         stage('build') {
-            dir('dotNet-Demo') {
-                sh "docker build -t costadevop/dotnet-demo:$BUILD_NUMBER ."            
+            steps {
+                dir('dotNet-Demo') {
+                    sh "docker build -t costadevop/dotnet-demo:$BUILD_NUMBER ."            
+                }
             }
         }
         stage('test') {
