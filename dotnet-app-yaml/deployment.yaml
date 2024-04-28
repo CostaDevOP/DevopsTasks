@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: demowebapi-depl
-  namespace: devops
+  # namespace: devops
 spec:
   replicas: 1
   selector:
