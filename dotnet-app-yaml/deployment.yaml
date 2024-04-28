@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: deployments
+kind: Deployments
 metadata:
   name: demowebapi-depl
   namespace: devops
