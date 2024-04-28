@@ -61,8 +61,14 @@ spec:
         stage('apply') {
             steps {
                 dir('dotnet-app-yaml') {
+                    withCredentials([file(credentialsId: 'mykubconfigfile', variable: 'MY_FILE')]) {
+                    //sh "cat $MY_FILE"
+                    sh 'mkdir ~/.kube/'        
+                    sh 'cat $MY_FILE > ~/.kube/config'
+                    //sh 'cat ~/.kube/config'
                     sh 'kubectl apply -f deployment.yaml'
-                    sh 'kubectl apply -f service-lb-dotnet.yaml'        
+                    sh 'kubectl apply -f service-lb-dotnet.yaml'
+                    }               
                 }
             }
         }
