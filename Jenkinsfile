@@ -62,8 +62,7 @@ spec:
             steps {
                 dir('dotnet-app-yaml') {
                     sh 'kubectl apply -f deployment.yaml'
-                    sh 'kubectl apply -f service-lb-dotnet.yaml'
-                    }               
+                    sh 'kubectl apply -f service-lb-dotnet.yaml'        
                 }
             }
         }
