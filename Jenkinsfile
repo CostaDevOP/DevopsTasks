@@ -60,6 +60,7 @@ podTemplate(yaml: '''
                 // sh 'aws configure list'
                 // sh 'aws --version'
                 dir('dotnet-app-yaml'){
+                    sh "echo $USER"
                     sh 'pwd'
                     // sh "kubectl apply -f deployment.yaml"
                     // sh "kubectl apply -f service-lb-dotnet.yaml"
