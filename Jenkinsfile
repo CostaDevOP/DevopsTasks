@@ -41,7 +41,7 @@ podTemplate(yaml: '''
         dir('dotNet-Demo') {
             sh '''
             export IFS=\'\'
-            /kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=docker.io/$registry:$BUILD_NUMBER
+            /kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=docker.io/costadevop/dotnet-demo:$BUILD_NUMBER
             '''
         }
       }
