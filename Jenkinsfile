@@ -1,89 +1,71 @@
-// Uses Declarative syntax to run commands inside a container.
-pipeline {
-    environment {
-        registry = "costadevop/dotnet-demo"
-        registryCredential = 'dockerhub-token'
-        dockerImage = ''
-    }
-    agent {
-        kubernetes {
-            // Rather than inline YAML, in a multibranch Pipeline you could use: yamlFile 'jenkins-pod.yaml'
-            // Or, to avoid YAML:
-            // containerTemplate {
-            //     name 'shell'
-            //     image 'ubuntu'
-            //     command 'sleep'
-            //     args 'infinity'
-            // }
-            yaml '''
-apiVersion: v1
-kind: Pod
-spec:
-  containers:
-  - name: jnlp-devops
-    image: costadevop/jnlp-devops-tasks:1
-    command:
-    - sleep
-    args:
-    - infinity
+def registry = "costadevop/dotnet-demo"
+
+podTemplate(yaml: '''
+              kind: Pod
+              spec:
+                containers:
+                - name: kaniko
+                  image: gcr.io/kaniko-project/executor:v1.6.0-debug
+                  imagePullPolicy: Always
+                  command:
+                  - sleep
+                  args:
+                  - 99d
+                  volumeMounts:
+                    - name: jenkins-docker-cfg
+                      mountPath: /kaniko/.docker
+                - name: kubectl
+                  image: bitnami/kubectl:latest
+                  command:
+                    - "/bin/sh"
+                    - "-c"
+                    - "sleep 99d"
+                  tty: true
+                  securityContext:
+                    runAsUser: 0
+                volumes:
+                - name: jenkins-docker-cfg
+                  projected:
+                    sources:
+                    - secret:
+                        name: regcred
+                        items:
+                          - key: .dockerconfigjson
+                            path: config.json
 '''
-            // Can also wrap individual steps:
-            // container('shell') {
-            //     sh 'hostname'
-            // }
-            defaultContainer 'jnlp-devops'
+  ) {
+  node(POD_LABEL) {
+    stage('Checkout,build,push with Kaniko') {
+      git branch: 'main', url: 'https://github.com/CostaDevOP/DevopsTasks'
+      sh 'pwd'
+      container('kaniko') {
+        sh 'pwd' 
+        sh 'ls -la'
+        dir('dotNet-Demo') {
+            sh "pwd"
+            sh "/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=docker.io/$registry:$BUILD_NUMBER"
         }
+      }
     }
-    stages {
-        stage('checkout') {
-            steps {
-                git url:'https://github.com/CostaDevOP/DevopsTasks.git' , branch: 'main'
-                sh 'pwd'
-            }
-        }
-        stage('build') {
-            steps {
-                dir('dotNet-Demo') {
-                    // script {
-                    //     dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                    // }
-                    sh 'echo Build Success'
+    stage('test'){
+        sh 'test Success'
+    }
+    stage('Deploy to EKS'){
+        container(name: 'kubectl', shell: '/bin/sh') {
+            withCredentials([file(credentialsId: 'eks-jenkins', variable: 'MY_SEC')]) {
+                sh "cat $MY_SEC > ~/.kube/config"
+                // sh "cat ~/.kube/config"
+                // sh 'apt-get update'
+                // sh 'apt-get install -y awscli' 
+                // sh 'aws configure list'
+                // sh 'aws --version'
+                dir('dotnet-app-yaml'){
+                    sh 'pwd'
+                    // sh "kubectl apply -f deployment.yaml"
+                    // sh "kubectl apply -f service-lb-dotnet.yaml"
                 }
             }
         }
-        stage('test') {
-            steps {
-                sh 'echo test'
-            }
-        }
-        // stage('Push our image to dockerhub') { 
-        //     steps { 
-        //         script { 
-        //             docker.withRegistry( '', registryCredential ) { 
-        //                 dockerImage.push() 
-        //             }
-        //         } 
-        //     }
-        // }
-        stage('apply') {
-            steps {
-                dir('dotnet-app-yaml') {
-                    sh 'ls -la'
-                    // withCredentials([file(credentialsId: 'mykubconfigfile', variable: 'MY_FILE')]) {
-                    // sh "cat $MY_FILE"
-                    // sh 'mkdir ~/.kube/'        
-                    // // sh 'cat $MY_FILE > ~/.kube/config'
-                    // //sh 'cat ~/.kube/config'
-                    sh 'kubectl apply -f deployment.yaml'
-                    sh 'kubectl apply -f service-lb-dotnet.yaml'
-                    // }               
-                }
-            }
-        }
-        // stage('Cleaning up') {
-        //     steps {
-        //         sh "docker rmi $registry:$BUILD_NUMBER"
-        //     }
-        // }
     }
+  }
 }
