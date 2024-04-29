@@ -43,7 +43,10 @@ podTemplate(yaml: '''
         sh 'ls -la'
         dir('dotNet-Demo') {
             sh "pwd"
-            sh "/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=docker.io/$registry:$BUILD_NUMBER"
+            sh '''
+            export IFS=''
+            /kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=docker.io/$registry:$BUILD_NUMBER
+            '''
         }
       }
     }
