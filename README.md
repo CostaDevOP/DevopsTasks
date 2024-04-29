@@ -25,63 +25,103 @@ and then deploys and uploads it as a website on another NS.
 2. create Group name - Admin (AdministratorAccess)
 3. add S3 (bucket) - saving state
 4. create folder terraform:
-- $ git clone https://github.com/hashicorp/learn-terraform-provision-eks-cluster<br>
-- terraform init<br>
-    $ export AWS_ACCESS_KEY_ID=<...><br>
-    $ export AWS_SECRET_ACCESS_KEY=<...><br>
-    $ terraform init
+```
+git clone https://github.com/hashicorp/learn-terraform-provision-eks-cluster
+```
+
+```
+export AWS_ACCESS_KEY_ID=<...><br>
+export AWS_SECRET_ACCESS_KEY=<...><br>
+```
+```
+terraform init
+```
 - correct some settings at terraform.tf (saving state) add :<br>
-    backend "s3" {<br>
-     bucket = "tfs-<...>" <br>
-     key = "devops-terraform-eks"<br>
-     region = "eu-central-1"<br>
-    }<br>
+```
+    backend "s3" {
+     bucket = "tfs-<...>" 
+     key = "devops-terraform-eks"
+     region = "eu-central-1"
+    }
+```
 - correct variables.tf for my variable:<br>
-  variable "region" {<br>
-   description = "AWS region"<br>
-   type        = string<br>
-   default     = "eu-central-1<br>
-  }<br>
+```
+  variable "region" {
+   description = "AWS region"
+   type        = string
+   default     = "eu-central-1
+  }
+```
 - connect to my eks :<br>
-   $ aws eks update-kubeconfig --region <...> --name <...><br>
+```
+   aws eks update-kubeconfig --region <...> --name <...>
+```
 - get all nodes :<br>
-   $ kubectl get nodes<br>
+```
+kubectl get nodes
+```
 
   ## Setting up Jenkins
 
   1. using documentation: https://www.jenkins.io/doc/book/installing/kubernetes/
   2. create jenkins folder and :<br>
-      $ git clone https://github.com/scriptcamp/kubernetes-jenkins<br>
-      $ kubectl create namespace devops<br>
+```
+    git clone https://github.com/scriptcamp/kubernetes-jenkins
+```
+```
+    kubectl create namespace devops
+```
   - correct all file to my projec (NS , Node name .... )<br>
   - commands i use :<br>
-     $ kubectl apply -f serviceAccount.yaml<br>
+```
+kubectl apply -f serviceAccount.yaml
+```
      
 <br>
     !!! befor create volume we need correct the yaml file: <br>
-  ******************************************** <br>
-        nodeAffinity: <br>
-      required: <br>
-        nodeSelectorTerms: <br>
-        - matchExpressions: <br>
-          - key: kubernetes.io/hostname <br>
-            operator: In <br>
-            values: <br>
-            - <...(kubectl get nodes)> <br>
-  <br>
-  ******************************************** <br>
-     $ kubectl create -f volume.yaml<br>
-     $ kubectl apply -f deployment.yaml<br>
-  - check deploy status:<br>
-     $ kubectl get deployments -n devops<br>
-  - deploy detail:<br>
-             ```kubectl describe deployments --namespace=devops ```
-  - create jenkins service:<br>
-             ``` kubectl apply -f service.yaml ```
+  ******************************************** <be>
 
-  - first connect pass command: (kubectl get pods --namespace=devops)<br>
-  ``` kubectl exec -it <...> cat /var/jenkins_home/secrets/initialAdminPassword -n devops```
-  ``` kubectl port-forward <...> 32000:32000 -n devops ``` 
+```
+        nodeAffinity: 
+      required: 
+        nodeSelectorTerms: 
+        - matchExpressions: 
+          - key: kubernetes.io/hostname 
+            operator: In 
+            values: 
+            - <...(kubectl get nodes)> 
+```
+  
+  ******************************************** <br>
+
+``` 
+kubectl create -f volume.yaml
+``` 
+
+```
+kubectl apply -f deployment.yaml
+```
+
+  - check deploy status:<br>
+```
+kubectl get deployments -n devops
+```
+  - deploy detail:<br>
+```
+kubectl describe deployments --namespace=devops
+```
+  - create jenkins service:<br>
+``` 
+kubectl apply -f service.yaml
+```
+
+    - first connect pass command: (kubectl get pods --namespace=devops)<br>
+``` 
+kubectl exec -it <...> cat /var/jenkins_home/secrets/initialAdminPassword -n devops
+```
+``` 
+kubectl port-forward <...> 32000:32000 -n devops
+``` 
   -  $ 403 - [kubectl create clusterrolebinding cluster-system-anonymous --clusterrole=cluster-admin --user=system:anonymous]
 
  ##### Loggin to Jenkins and config 
