@@ -212,6 +212,8 @@ export IFS=''
 
 - creating Jenkinsfile for CI/CD pipeline
     -   add new pipeline script from SCM
+ 
+ <img src="https://github.com/CostaDevOP/DevopsTasks/blob/main/jenkins-pipeline.png" alt="jenkins pipline">
 
 
 
