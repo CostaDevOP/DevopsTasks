@@ -44,8 +44,10 @@ spec:
         stage('build') {
             steps {
                 dir('dotNet-Demo') {
-                    // sh "docker build -t costadevop/dotnet-demo:$BUILD_NUMBER ." 
-                    sh 'echo build Success'
+                    // script {
+                    //     dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    // }
+                    sh 'echo Build Success'
                 }
             }
         }
@@ -78,5 +80,10 @@ spec:
                 }
             }
         }
+        // stage('Cleaning up') {
+        //     steps {
+        //         sh "docker rmi $registry:$BUILD_NUMBER"
+        //     }
+        // }
     }
 }
