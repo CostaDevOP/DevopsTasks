@@ -1,5 +1,10 @@
 // Uses Declarative syntax to run commands inside a container.
 pipeline {
+    environment {
+        registry = "costadevop/dotnet-demo"
+        registryCredential = 'dockerhub-token'
+        dockerImage = ''
+    }
     agent {
         kubernetes {
             // Rather than inline YAML, in a multibranch Pipeline you could use: yamlFile 'jenkins-pod.yaml'
