@@ -40,7 +40,7 @@ podTemplate(yaml: '''
       container('kaniko') {
         dir('dotNet-Demo') {
             sh '''
-            export IFS=''
+            export IFS=\'\'
             /kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=docker.io/$registry:$BUILD_NUMBER
             '''
         }
