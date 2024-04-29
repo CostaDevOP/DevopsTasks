@@ -37,12 +37,8 @@ podTemplate(yaml: '''
   node(POD_LABEL) {
     stage('Checkout,build,push with Kaniko') {
       git branch: 'main', url: 'https://github.com/CostaDevOP/DevopsTasks'
-      sh 'pwd'
       container('kaniko') {
-        sh 'pwd' 
-        sh 'ls -la'
         dir('dotNet-Demo') {
-            sh "pwd"
             sh '''
             export IFS=''
             /kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=docker.io/$registry:$BUILD_NUMBER
