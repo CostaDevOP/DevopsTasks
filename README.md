@@ -138,11 +138,20 @@ build pipline job :
  name: dotnet-deploying
 file: Jenkinsfile
 
-### aws EKS from ver 1.19+ not allow us to use a Docker daemon
+### aws EKS from ver 1.24 not allow us to use a Docker daemon
+[https://aws.amazon.com/blogs/containers/all-you-need-to-know-about-moving-to-containerd-on-amazon-eks/]
 
-### as a solution i use kaniko - Build Images In Kubernetes [https://github.com/GoogleContainerTools/kaniko/blob/main/README.md#running-kaniko-in-a-kubernetes-cluster]
+### as a solution i use kaniko - Build Images In Kubernetes
+- Kaniko
+    - This tool can be leveraged within a container or Kubernetes cluster.
+    - Build and push images in kubernetes cluster.
+    - Kaniko can be run as pod/deployment in Kubernetes. Just share the Dockerfile and build artifacts as arguments. The pod builds and pushes the image to specified container registry.
+[https://github.com/GoogleContainerTools/kaniko/blob/main/README.md#running-kaniko-in-a-kubernetes-cluster]
 <br>
 
+
+
+### testing pipeline script
 - Create this Secret, naming it regcred:
 ```
 kubectl create secret docker-registry regcred --docker-server=https://index.docker.io/v1/ --docker-username=<name> --docker-password=<pword> --docker-email=<email>
@@ -189,3 +198,20 @@ podTemplate(yaml: '''
   }
 }
 ```
+
+### !!! if Error : for "executor" Run 'executor --help' for usage
+you need to ensure that the IFS is set to null before your executor command
+```
+sh '''
+export IFS=''
+/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=docker.io/costadevop/testpip
+'''
+```
+
+
+
+- creating Jenkinsfile for CI/CD pipeline
+    -   add new pipeline script from SCM
+
+
+
