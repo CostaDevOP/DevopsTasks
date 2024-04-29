@@ -75,13 +75,13 @@ and then deploys and uploads it as a website on another NS.
   - check deploy status:<br>
      $ kubectl get deployments -n devops<br>
   - deploy detail:<br>
-     $ kubectl describe deployments --namespace=devops<br>
+             ```kubectl describe deployments --namespace=devops ```
   - create jenkins service:<br>
-     $ kubectl apply -f service.yaml<br>
+             ``` kubectl apply -f service.yaml ```
 
   - first connect pass command: (kubectl get pods --namespace=devops)<br>
-     $ kubectl exec -it <...> cat /var/jenkins_home/secrets/initialAdminPassword -n devops<br>
-  -  $ kubectl port-forward <...> 32000:32000 -n devops <br>
+  ``` kubectl exec -it <...> cat /var/jenkins_home/secrets/initialAdminPassword -n devops```
+  ``` kubectl port-forward <...> 32000:32000 -n devops ``` 
   -  $ 403 - [kubectl create clusterrolebinding cluster-system-anonymous --clusterrole=cluster-admin --user=system:anonymous]
 
  ##### Loggin to Jenkins and config 
