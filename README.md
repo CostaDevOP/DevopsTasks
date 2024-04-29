@@ -98,8 +98,54 @@ build pipline job :
  name: dotnet-deploying
 file: Jenkinsfile
 
+### aws EKS from ver 1.19+ not allow us to use a Docker daemon
 
+### as a solution i use kaniko - Build Images In Kubernetes [https://github.com/GoogleContainerTools/kaniko/blob/main/README.md#running-kaniko-in-a-kubernetes-cluster]
+<br>
 
-  
-    
-    
+- Create this Secret, naming it regcred:
+```
+kubectl create secret docker-registry regcred --docker-server=https://index.docker.io/v1/ --docker-username=<name> --docker-password=<pword> --docker-email=<email>
+```
+```
+podTemplate(yaml: '''
+              kind: Pod
+              spec:
+                containers:
+                - name: kaniko
+                  image: gcr.io/kaniko-project/executor:v1.6.0-debug
+                  imagePullPolicy: Always
+                  command:
+                  - sleep
+                  args:
+                  - 99d
+                  volumeMounts:
+                    - name: jenkins-docker-cfg
+                      mountPath: /kaniko/.docker
+                volumes:
+                - name: jenkins-docker-cfg
+                  projected:
+                    sources:
+                    - secret:
+                        name: regcred
+                        items:
+                          - key: .dockerconfigjson
+                            path: config.json
+'''
+  ) {
+
+  node(POD_LABEL) {
+    stage('Build with Kaniko') {
+      git branch: 'main', url: 'https://github.com/CostaDevOP/DevopsTasks'
+      container('kaniko') {
+        sh 'pwd' 
+        sh 'ls -la'
+        dir('dotNet-Demo') {
+            sh "pwd"
+            sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=docker.io/costadevop/testpip'
+        }
+      }
+    }
+  }
+}
+```
