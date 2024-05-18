@@ -51,8 +51,8 @@ podTemplate(yaml: '''
     }
     stage('Deploy to EKS'){
         container(name: 'kubectl', shell: '/bin/sh') {
-            withCredentials([file(credentialsId: 'eks-jenkins-q', variable: 'MY_SEC')]) {
-                sh "sh cat $MY_SEC > ~/.kube/config"
+            withCredentials([file(credentialsId: 'eks-jenkins-q', variable: 'EKS')]) {
+                sh "sh cat $EKS > ~/.kube/config"
                 sh "cat ~/.kube/config"
                 sh 'apt-get update'
                 sh 'apt-get install -y awscli' 
