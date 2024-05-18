@@ -154,7 +154,7 @@ file: Jenkinsfile
 ### testing pipeline script
 - Create this Secret, naming it regcred:
 ```
-kubectl create secret docker-registry regcred --docker-server=https://index.docker.io/v1/ --docker-username=<name> --docker-password=<pword> --docker-email=<email>
+kubectl create secret docker-registry regcred --docker-server=https://index.docker.io/v1/ --docker-username=<name> --docker-password=<pword> --docker-email=<email> -n devops
 ```
 ```
 podTemplate(yaml: '''
