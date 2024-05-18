@@ -51,16 +51,17 @@ podTemplate(yaml: '''
     }
     stage('Deploy to EKS'){
         container(name: 'kubectl', shell: '/bin/sh') {
-            withCredentials([file(credentialsId: 'eks-jenkins', variable: 'MY_SEC')]) {
-                sh "cat $MY_SEC > ~/.kube/config"
-                // sh "cat ~/.kube/config"
-                // sh 'apt-get update'
-                // sh 'apt-get install -y awscli' 
-                // sh 'aws configure list'
-                // sh 'aws --version'
+            withCredentials([file(credentialsId: 'eks-jenkins-q', variable: 'MY_SEC')]) {
+                sh 'sh "cat $MY_SEC > ~/.kube/config"'
+                sh "cat ~/.kube/config"
+                sh 'apt-get update'
+                sh 'apt-get install -y awscli' 
+                sh 'aws configure list'
+                sh 'aws --version'
                 dir('dotnet-app-yaml'){
                     sh "echo $USER"
                     sh 'pwd'
+                    sh "kubectl get pods -n devops"
                     // sh "kubectl apply -f deployment.yaml"
                     // sh "kubectl apply -f service-lb-dotnet.yaml"
                 }
